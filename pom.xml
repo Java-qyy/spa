@@ -1,8 +1,7 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0
 	http://maven.apache.org/maven-v4_0_0.xsd">
-	
+
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>com.rj.bd</groupId>
 	<artifactId>spa</artifactId>
@@ -10,18 +9,39 @@
 	<version>0.0.1-SNAPSHOT</version>
 	<name>spa Maven Webapp</name>
 	<url>http://maven.apache.org</url>
-	
+
 	<properties>
 		<!-- spring版本号 -->
-		<spring.version>3.2.7.RELEASE</spring.version>
+		<spring.version>4.2.4.RELEASE</spring.version>
 		<!-- log4j日志文件管理包版本 -->
 		<slf4j.version>1.6.6</slf4j.version>
 		<log4j.version>1.2.12</log4j.version>
 		<!-- junit版本号 -->
 		<junit.version>4.10</junit.version>
 	</properties>
-	
+
 	<dependencies>
+		<dependency>
+			<groupId>com.fasterxml.jackson.core</groupId>
+			<artifactId>jackson-core</artifactId>
+			<version>2.7.3</version>
+		</dependency>
+		<dependency>
+			<groupId>com.fasterxml.jackson.core</groupId>
+			<artifactId>jackson-databind</artifactId>
+			<version>2.7.3</version>
+		</dependency>
+		<dependency>
+			<groupId>com.fasterxml.jackson.core</groupId>
+			<artifactId>jackson-annotations</artifactId>
+			<version>2.7.3</version>
+		</dependency>
+		<!-- 格式化对象，方便输出日志 -->
+		<dependency>
+			<groupId>com.alibaba</groupId>
+			<artifactId>fastjson</artifactId>
+			<version>1.1.41</version>
+		</dependency>
 		<!-- 添加Spring依赖 -->
 		<dependency>
 			<groupId>org.springframework</groupId>
@@ -119,7 +139,7 @@
 			<groupId>javax.servlet</groupId>
 			<artifactId>servlet-api</artifactId>
 			<version>2.5</version>
-		<scope>provided</scope>
+			<scope>provided</scope>
 		</dependency>
 		<!-- https://mvnrepository.com/artifact/javax.servlet/jstl -->
 		<dependency>
@@ -141,7 +161,7 @@
 			<version>1.1.2</version>
 		</dependency>
 	</dependencies>
-  <build>
-    <finalName>spa</finalName>
-  </build>
+	<build>
+		<finalName>spa</finalName>
+	</build>
 </project>

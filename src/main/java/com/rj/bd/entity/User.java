@@ -9,8 +9,9 @@ import lombok.Data;
 public class User {
 
 
-	public String id;
+	public int id;
 	public String user;
-	
-	
+	public String sex;
+	public String tel;
+	public String identitycard;
 }

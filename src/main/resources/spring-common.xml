@@ -37,7 +37,7 @@
     </bean>
 
 
-	
+
      <!--4-2 MapperScannerConfigurer扫描器：扫描某一路径下的mapper接口，
           扫描mapper接口的目的：是将Mapper接口生成代理注入到Spring中，然后进而实现在java代码中使用
           属性basePackage，指定的就是被扫描的持久层接口的所在的包的路径
@@ -46,6 +46,7 @@
      -->
     <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer"> 
            <property name="basePackage" value="com.rj.bd.mapper"/>
+   
     </bean>
    
 
@@ -74,4 +75,4 @@
 	<tx:annotation-driven transaction-manager="txManager" />	
 		
 		
-		</beans>
+</beans>
