@@ -6,7 +6,7 @@ import lombok.Data;
 
 
 @Data
-@TableName("Technician")
+@TableName("technician")
 public class Technician {
 
 	

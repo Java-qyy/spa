@@ -1,5 +1,6 @@
 package com.rj.bd.mapper;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.annotations.Select;
 
@@ -10,4 +11,8 @@ public interface IUserMapper extends BaseMapper<User>{
 
 	@Select(value={"select * from user"})
 	public List<User> queryAll();
+	
+	@Select(value={"select * from user where id=#{id}"})
+	public List<User> queryById(int id);
+	
 }

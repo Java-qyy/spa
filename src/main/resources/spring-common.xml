@@ -14,7 +14,6 @@
     http://www.springframework.org/schema/mvc/spring-mvc-3.0.xsd 
     http://www.springframework.org/schema/tx 
     http://www.springframework.org/schema/tx/spring-tx-3.0.xsd">
-
 		
 	<!-- 配置整合mybatis-plus过程 -->
     <!-- 1、配置数据库相关参数properties的属性：${url} -->

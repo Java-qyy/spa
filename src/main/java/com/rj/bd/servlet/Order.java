@@ -12,26 +12,23 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.rj.bd.entity.User;
+import com.rj.bd.mapper.IOrderMapper;
 import com.rj.bd.mapper.ITechnicianMapper;
-import com.rj.bd.mapper.IUserMapper;
 import com.rj.bd.util.Json;
+
 @Controller
-@RequestMapping("/technician")
-public class Technician {
+@RequestMapping("/order")
+public class Order {
+	
+	
+	@Autowired
+	private IOrderMapper orderMapper;
 
 	
-
-		@Autowired
-		private ITechnicianMapper technicianMapper;
-
-		
-		@RequestMapping(value="/query",method=RequestMethod.GET)
-		@ResponseBody
-		public Map<String, Object> queryAll(HttpServletResponse response) throws IOException {
-			List<com.rj.bd.entity.Technician> list = technicianMapper.selectList(null);
-			return Json.MyPrint(200, "请求成功", list);
-		}
+	@RequestMapping(value="/query",method=RequestMethod.GET)
+	@ResponseBody
+	public Map<String, Object> queryAll(HttpServletResponse response) throws IOException {
+		List<com.rj.bd.entity.Order> list = orderMapper.selectList(null);
+		return Json.MyPrint(200, "请求成功", list);
 	}
-
-
+}

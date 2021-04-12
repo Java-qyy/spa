@@ -11,5 +11,9 @@ import com.rj.bd.entity.User;
 public interface ITechnicianMapper  extends BaseMapper<Technician>{
 
 	@Select(value={"select * from technician"})
-	public List<User> queryAll();
+	public List<Technician> queryAll();
+	
+	@Select(value={"select * from technician where technicianid=#{id}"})
+	public List<Technician> queryById(int id);
+	
 }

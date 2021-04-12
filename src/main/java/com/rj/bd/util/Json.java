@@ -1,4 +1,4 @@
-package com.rj.bd;
+package com.rj.bd.util;
 
 import java.util.HashMap;
 import java.util.Map;
