@@ -26,7 +26,9 @@ public class RootLogin {
 	@ResponseBody
 	public Map<String, Object> queryAll(HttpServletRequest request) throws IOException {
 		try {
-			List<Map<String, Object>> list = rootLoginMapper.query();
+			int page = Integer.parseInt(request.getParameter("page"));
+			int size = Integer.parseInt(request.getParameter("size"));
+			List<Map<String, Object>> list = rootLoginMapper.query(page,size);
 			return Json.MyPrint("200", "请求成功", list);
 		} catch (Exception e) {
 			return Json.MyPrint("-1", "非法调用", null);		

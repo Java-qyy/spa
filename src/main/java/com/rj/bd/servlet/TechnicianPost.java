@@ -4,12 +4,14 @@ import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.rj.bd.entity.Technician;
@@ -41,9 +43,11 @@ public class TechnicianPost {
 	
 	@RequestMapping(value="/query",method=RequestMethod.GET)
 	@ResponseBody
-	public Map<String, Object> queryAll(HttpServletResponse response) throws IOException {
+	public Map<String, Object> queryAll(HttpServletRequest request) throws IOException {
 	try {
-		List<Map<String, Object>> list = technicianPostMapper.queryMoreAll();
+		int page = Integer.parseInt(request.getParameter("page"));
+		int size = Integer.parseInt(request.getParameter("size"));
+		List<Map<String, Object>> list = technicianPostMapper.queryMoreAll(page,size);
 		return Json.MyPrint("200", "请求成功", list);
 	} catch (Exception e) {
 		return Json.MyPrint("-1", "非法调用", null);

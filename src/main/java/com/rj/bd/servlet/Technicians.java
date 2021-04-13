@@ -1,6 +1,7 @@
 package com.rj.bd.servlet;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -13,6 +14,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.baomidou.mybatisplus.core.conditions.Wrapper;
+import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
+import com.rj.bd.entity.Technician;
+import com.rj.bd.entity.TechnicianState;
 import com.rj.bd.entity.User;
 import com.rj.bd.mapper.ITechnicianMapper;
 import com.rj.bd.mapper.IUserMapper;
@@ -26,7 +31,7 @@ import com.rj.bd.util.Json;
 
 @Controller
 @RequestMapping("/technician")
-public class Technician {
+public class Technicians {
 
 	
 
@@ -60,6 +65,50 @@ public class Technician {
 			
 		}
 		
+		
+		
+		
+		@RequestMapping(value="/state",method=RequestMethod.GET)
+		@ResponseBody
+		public Map<String, Object> state(HttpServletRequest request){
+			TechnicianState technicianState =new TechnicianState();
+			technicianState.setAll(technicianMapper.queryStateA()); 
+			technicianState.setBusy(technicianMapper.queryStateB());
+			technicianState.setLeisure(technicianMapper.queryStateL());
+			technicianState.setRest(technicianMapper.queryStateR());
+			
+			
+			return Json.MyPrint("200", "请求成功", technicianState);
+			
+		}
+		
+		
+		
+		
+		
+		@RequestMapping(value="/delete",method=RequestMethod.DELETE)
+		@ResponseBody
+		public Map<String, Object> deleteUser(HttpServletRequest request) throws IOException {
+			try {
+				
+				int technicianid = Integer.parseInt(request.getParameter("technicianid"));
+				
+				UpdateWrapper<Technician> updateWrapper = new UpdateWrapper<Technician>();
+				updateWrapper.eq("technicianid",technicianid);
+				
+				int no =technicianMapper.delete(updateWrapper);
+				if(no!=0){
+					System.out.println("删除成功");
+					return Json.MyPrint("200", "删除成功", null);
+				}else{
+					return Json.MyPrint("-1", "删除失败", null);
+				}
+			
+			} catch (Exception e) {
+				return Json.MyPrint("-2", "非法调用", null);
+			}
+			
+		}
 		
 		
 }
