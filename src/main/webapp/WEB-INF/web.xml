@@ -7,7 +7,6 @@
 	
   <display-name>Archetype Created Web Application</display-name>
   
-   
   <!-- 加载Spring容器配置 -->
 	<listener>
 		<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
