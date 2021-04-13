@@ -31,10 +31,25 @@ public class Order {
 	@Autowired 
 	private IOrderMapper orderMapper;
 	
-	
 	@RequestMapping(value="/query",method=RequestMethod.GET)
 	@ResponseBody
 	public Map<String, Object> queryAll(HttpServletRequest request) throws IOException {
+		try {
+			
+			
+			List<Map<String, Object>> list = orderMapper.query();
+			return Json.MyPrint("200", "请求成功", list);
+		} catch (Exception e) {
+			return Json.MyPrint("-1", "非法调用", null);
+		}
+		
+	}
+	
+	
+	
+	@RequestMapping(value="/queryOne",method=RequestMethod.GET)
+	@ResponseBody
+	public Map<String, Object> queryOne(HttpServletRequest request) throws IOException {
 		try {
 			int state = Integer.parseInt(request.getParameter("orderstate"));
 			
