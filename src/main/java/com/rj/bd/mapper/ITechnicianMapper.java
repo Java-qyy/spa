@@ -15,5 +15,8 @@ public interface ITechnicianMapper  extends BaseMapper<Technician>{
 	
 	@Select(value={"select * from technician where technicianid=#{id}"})
 	public List<Technician> queryById(int id);
+
+	@Select(value={"select * from technician where technicianname=#{name}"})
+	public List<Technician> queryOne(String name);
 	
 }

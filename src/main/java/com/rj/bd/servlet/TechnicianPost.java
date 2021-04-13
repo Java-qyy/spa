@@ -23,6 +23,14 @@ import com.rj.bd.util.Json;
 
 import lombok.experimental.var;
 
+
+/**
+ * @desc    获取全部评论
+ * @author 齐云尧
+ *
+ */
+
+
 @Controller
 @RequestMapping("/technicianpost")
 public class TechnicianPost {
@@ -38,6 +46,6 @@ public class TechnicianPost {
 		List<Map<String, Object>> list = technicianPostMapper.queryMoreAll();
 
 		
-		return Json.MyPrint(200, "请求成功", list);
+		return Json.MyPrint("200", "请求成功", list);
 	}
 }

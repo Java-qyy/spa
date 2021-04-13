@@ -24,6 +24,13 @@ import com.rj.bd.mapper.ITechnicianMapper;
 import com.rj.bd.mapper.IUserMapper;
 import com.rj.bd.util.Json;
 
+/**
+ * @desc     获取全部用户
+ * @author 齐云尧
+ *
+ */
+
+
 @Controller
 @RequestMapping("/user")
 public class user {
@@ -35,6 +42,18 @@ public class user {
 	@ResponseBody
 	public Map<String, Object> queryAll(HttpServletResponse response) throws IOException {
 		List<User> list = userMapper.selectList(null);
-		return Json.MyPrint(200, "请求成功", list);
+		return Json.MyPrint("200", "请求成功", list);
 	}
+	
+	
+	
+	
+	@RequestMapping(value="/queryOne",method=RequestMethod.GET)
+	@ResponseBody
+	public Map<String, Object> queryOne(HttpServletRequest request) throws IOException {
+		String name = request.getParameter("user");
+		List<User> list = userMapper.queryOne(name);
+		return Json.MyPrint("200", "请求成功", list);
+	}
+	
 }
