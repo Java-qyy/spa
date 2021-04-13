@@ -37,17 +37,27 @@ public class Technician {
 		@RequestMapping(value="/query",method=RequestMethod.GET)
 		@ResponseBody
 		public Map<String, Object> queryAll(HttpServletResponse response) throws IOException {
-			List<com.rj.bd.entity.Technician> list = technicianMapper.selectList(null);
-			return Json.MyPrint("200", "请求成功", list);
+			try {
+				List<com.rj.bd.entity.Technician> list = technicianMapper.selectList(null);
+				return Json.MyPrint("200", "请求成功", list);
+			} catch (Exception e) {
+				return Json.MyPrint("-1", "非法调用", null);
+			}
+		
 		}
 		
 		
 		@RequestMapping(value="/queryOne",method=RequestMethod.GET)
 		@ResponseBody
 		public Map<String, Object> queryOne(HttpServletRequest request) throws IOException {
-			String name = request.getParameter("technicianname");
-			List<com.rj.bd.entity.Technician> list = technicianMapper.queryOne(name);
-			return Json.MyPrint("200", "请求成功", list);
+			try {
+				String name = request.getParameter("technicianname");
+				List<com.rj.bd.entity.Technician> list = technicianMapper.queryOne(name);
+				return Json.MyPrint("200", "请求成功", list);
+			} catch (Exception e) {
+				return Json.MyPrint("-1", "非法调用", null);
+			}
+			
 		}
 		
 		

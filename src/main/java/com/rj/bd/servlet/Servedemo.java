@@ -38,26 +38,37 @@ public class Servedemo {
 	@RequestMapping(value="/query",method=RequestMethod.GET)
 	@ResponseBody
 	public Map<String, Object> queryAll(HttpServletResponse response) throws IOException {
-		List<com.rj.bd.entity.Servedemo> list = servedemoMapper.selectList(null);
-		return Json.MyPrint("200", "请求成功", list);
+		try {
+			List<com.rj.bd.entity.Servedemo> list = servedemoMapper.selectList(null);
+			return Json.MyPrint("200", "请求成功", list);
+		} catch (Exception e) {
+			return Json.MyPrint("-1", "非法调用", null);
+		}
+		
 	}
 	
 	
 	@RequestMapping(value="/add",method=RequestMethod.POST)
 	@ResponseBody
 	public Map<String, Object> add(HttpServletRequest request) throws IOException {
-		com.rj.bd.entity.Servedemo servedemo = new com.rj.bd.entity.Servedemo();
 		
-		servedemo.setServe(request.getParameter("serve"));
-		servedemo.setServemoney(request.getParameter("servemoney"));
-		servedemo.setServetime(request.getParameter("servetime"));
-		servedemo.setServenumber(0);
-		int addno = servedemoMapper.insert(servedemo);
-		if(addno!=0){
-			return Json.MyPrint("200", "请求成功", null);
-		}else{
-			return Json.MyPrint("-1", "请求失败", null);
+		try {
+			com.rj.bd.entity.Servedemo servedemo = new com.rj.bd.entity.Servedemo();
+			
+			servedemo.setServe(request.getParameter("serve"));
+			servedemo.setServemoney(request.getParameter("servemoney"));
+			servedemo.setServetime(request.getParameter("servetime"));
+			servedemo.setServenumber(0);
+			int addno = servedemoMapper.insert(servedemo);
+			if(addno!=0){
+				return Json.MyPrint("200", "请求成功", null);
+			}else{
+				return Json.MyPrint("-1", "请求失败", null);
+			}
+		} catch (Exception e) {
+			return Json.MyPrint("-1", "非法调用", null);
 		}
+		
 		
 	}
 	

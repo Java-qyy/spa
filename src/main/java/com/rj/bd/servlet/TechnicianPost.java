@@ -42,10 +42,12 @@ public class TechnicianPost {
 	@RequestMapping(value="/query",method=RequestMethod.GET)
 	@ResponseBody
 	public Map<String, Object> queryAll(HttpServletResponse response) throws IOException {
-	
+	try {
 		List<Map<String, Object>> list = technicianPostMapper.queryMoreAll();
-
-		
 		return Json.MyPrint("200", "请求成功", list);
+	} catch (Exception e) {
+		return Json.MyPrint("-1", "非法调用", null);
+	}
+		
 	}
 }

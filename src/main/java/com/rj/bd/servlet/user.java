@@ -41,8 +41,13 @@ public class user {
 	@RequestMapping(value="/query",method=RequestMethod.GET)
 	@ResponseBody
 	public Map<String, Object> queryAll(HttpServletResponse response) throws IOException {
-		List<User> list = userMapper.selectList(null);
-		return Json.MyPrint("200", "请求成功", list);
+		try {
+			List<User> list = userMapper.selectList(null);
+			return Json.MyPrint("200", "请求成功", list);
+		} catch (Exception e) {
+			return Json.MyPrint("-1", "非法调用", null);
+		}
+		
 	}
 	
 	
@@ -51,9 +56,14 @@ public class user {
 	@RequestMapping(value="/queryOne",method=RequestMethod.GET)
 	@ResponseBody
 	public Map<String, Object> queryOne(HttpServletRequest request) throws IOException {
-		String name = request.getParameter("user");
-		List<User> list = userMapper.queryOne(name);
-		return Json.MyPrint("200", "请求成功", list);
+		try {
+			String name = request.getParameter("user");
+			List<User> list = userMapper.queryOne(name);
+			return Json.MyPrint("200", "请求成功", list);
+		} catch (Exception e) {
+			return Json.MyPrint("-1", "非法调用", null);
+		}
+		
 	}
 	
 }

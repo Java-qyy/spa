@@ -37,8 +37,14 @@
 			<version>2.7.3</version>
 		</dependency>
 
+
 		
-		
+		  <dependency>
+      <groupId>com.thetransactioncompany</groupId>
+      <artifactId>cors-filter</artifactId>
+      <version>2.5</version>
+    </dependency>
+
 		
 		<!-- 格式化对象，方便输出日志 -->
 		<dependency>
