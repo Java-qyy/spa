@@ -16,6 +16,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import com.alibaba.fastjson.JSONObject;
 import com.baomidou.mybatisplus.core.conditions.Wrapper;
@@ -113,28 +114,26 @@ public class Users {
 	
 	
 	
-	@RequestMapping(value="/delete",method=RequestMethod.DELETE)
+	@RequestMapping(value="/delete",method=RequestMethod.POST)
 	@ResponseBody
-	public Map<String, Object> deleteUser(HttpServletRequest request) throws IOException {
-		try {
+	public Map<String, Object> deleteUser(HttpServletRequest request,int id) throws IOException {
+
+				
+			System.out.println(id);
 			
-			int id = Integer.parseInt(request.getParameter("id"));
 			
-			UpdateWrapper<User> updateWrapper = new UpdateWrapper<User>();
-			updateWrapper.eq("id",id);
-			
-			int no =userMapper.delete(updateWrapper);
-			if(no!=0){
-				System.out.println("删除成功");
-				return Json.MyPrint("200", "删除成功", null);
-			}else{
-				return Json.MyPrint("-1", "删除失败", null);
-			}
-		
-		} catch (Exception e) {
-			return Json.MyPrint("-2", "非法调用", null);
-		}
-		
+//			UpdateWrapper<User> updateWrapper = new UpdateWrapper<User>();
+//			updateWrapper.eq("id",id);
+//			
+//			int no =userMapper.delete(updateWrapper);
+//			if(no!=0){
+//				System.out.println("删除成功");
+//				return Json.MyPrint("200", "删除成功", null);
+//			}else{
+//				return Json.MyPrint("-1", "删除失败", null);
+//			}
+	
+			return null;
 	}
 	
 	

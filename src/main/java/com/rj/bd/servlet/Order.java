@@ -11,7 +11,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+
+import com.rj.bd.entity.OrderState;
 
 import com.rj.bd.mapper.IOrderMapper;
 import com.rj.bd.mapper.ITechnicianMapper;
@@ -60,4 +63,44 @@ public class Order {
 		}
 		
 	}
+	
+	
+	@RequestMapping(value="/state",method=RequestMethod.GET)
+	@ResponseBody
+	public Map<String, Object> state( HttpServletRequest request){
+		OrderState orderState = new OrderState();
+		int orderstate = 0;
+		if(request.getParameter("orderstate")==null){
+			int state=3;
+			orderstate= state;
+		}else{
+			orderstate= Integer.parseInt( request.getParameter("orderstate"));
+		}
+		
+		System.out.println(orderstate);
+		if(orderstate == 0){
+			orderState.setYuyue(orderMapper.queryStateY());
+			return Json.MyPrint("200", "请求成功", orderState);
+		}else if(orderstate == 1){
+			orderState.setProceed(orderMapper.queryStateP());
+			return Json.MyPrint("200", "请求成功", orderState);
+		}else if(orderstate == 2){
+			orderState.setAccomplish(orderMapper.queryStateC());
+			return Json.MyPrint("200", "请求成功", orderState);
+		}
+		
+		
+		orderState.setAll(orderMapper.queryStateA());
+		orderState.setProceed(orderMapper.queryStateP());
+		orderState.setAccomplish(orderMapper.queryStateC());
+		orderState.setYuyue(orderMapper.queryStateY());
+		return Json.MyPrint("200", "请求成功", orderState);
+		
+		
+	}
+	
+	
+	
+	
+	
 }

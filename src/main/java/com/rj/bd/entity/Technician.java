@@ -16,6 +16,6 @@ public class Technician {
 	public int jobtime;
 	public String techniciantemp;
 	public int technicianstate;
-	public String technicianheat;
+	public int technicianheat;
 	
 }
