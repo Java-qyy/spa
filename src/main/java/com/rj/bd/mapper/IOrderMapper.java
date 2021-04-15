@@ -3,7 +3,9 @@ package com.rj.bd.mapper;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.rj.bd.entity.Order;
@@ -14,7 +16,7 @@ public interface IOrderMapper extends BaseMapper<Order>{
 	@Select(value={"select * from `order`"})
 	public List<Order> queryAll();
 	
-	@Select(value={"select u.user,s.servemoney,o.orderstate,s.serve,t.technicianname,o.ordertime from `order` o left join `user` u on o.userid=u.id left join servedemo s on s.serveid=o.serveid left join technician t on t.technicianid=o.technicianid"})
+	@Select(value={"select u.user,s.servemoney as money ,o.orderstate,s.serve,t.technicianname,o.ordertime from `order` o left join `user` u on o.userid=u.id left join servedemo s on s.serveid=o.serveid left join technician t on t.technicianid=o.technicianid"})
 	public List<Map<String, Object>> query();
 	
 	@Select(value={"select u.user,s.servemoney,o.orderstate ,s.serve,t.technicianname,o.ordertime from `order` o left join `user` u on o.userid=u.id left join servedemo s on s.serveid=o.serveid left join technician t on t.technicianid=o.technicianid where orderstate=#{orderstate}"})
@@ -28,5 +30,14 @@ public interface IOrderMapper extends BaseMapper<Order>{
 	public int queryStateP();
 	@Select(value={"select count(*) from `order` where orderstate=2"})
 	public int queryStateC();
+	
+	@Select(value={"select count(orderstate) as orderstatesum ,ordertime  from `order` where ordertime>=#{first} and ordertime<=#{end} and orderstate=0 group by ordertime "})
+	public List<Map<String, Object>> queryNumber(@Param("first") String first ,@Param("end") String end);
+
+	 
+	@Select(value={"select sum(money) as moneysum,ordertime  from `order` where ordertime>=#{first} and ordertime<=#{end} and orderstate=0 group by ordertime "})
+	public List<Map<String, Object>> queryshouru(@Param("first") String first ,@Param("end") String end);
+
+
 	
 }

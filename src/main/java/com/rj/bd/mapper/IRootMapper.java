@@ -19,6 +19,9 @@ public interface IRootMapper extends BaseMapper<Root>{
 
 	@Select(value={"select * from root where rootuser=#{rootuser} and rootpassword=#{rootpassword}"})
 	public List<Root> selectquery(@Param("rootuser") String rootuser, @Param("rootpassword") String rootpassword);
+
+	@Select(value={"select count(*) from root  where token=#{token} and rootid=#{id} "})
+	public int queryToken(@Param("token") String token,@Param("id") String id);
 	
 	
 	

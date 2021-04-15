@@ -27,7 +27,6 @@ import com.rj.bd.util.TokenUtil;
 
 /**
  * @desc     登陆
- * @author 齐云尧
  *
  */
 @Controller
@@ -68,10 +67,12 @@ public class Login {
 					}
 					
 					String token = root.getToken();
-					updateWrapper.eq("token", token);
+					int rootid = root.getRootid();
+					updateWrapper.eq("rootid", rootid);
 					System.out.println("token:"+token);
 					String newtoken =TokenUtil.getToken(rootuser,rootpassword);
 					login.setToken(newtoken);
+					login.setRootid(rootid);
 					System.out.println("newtoken:"+newtoken);
 					int no =rootMapper.update(login, updateWrapper);
 					if(no!=0){
@@ -84,11 +85,26 @@ public class Login {
 				
 				return Json.MyPrint("200", "登陆成功", list2);
 			}
-	
-			
-		
-		
-		
+
 		
 	}
+	
+	@RequestMapping(value="/token",method=RequestMethod.GET)
+	@ResponseBody
+	public Map<String, Object> token(HttpServletRequest request , String token,String id) throws IOException {
+		
+					int list = rootMapper.queryToken(token,id);
+					if(list!=0){
+						return Json.MyPrint("200", "请求成功", null);
+					}else{
+						return Json.MyPrint("-1", "登陆失效，请重新登陆", null);
+					}
+					
+		
+	}
+	
+	
+	
+	
+	
 }

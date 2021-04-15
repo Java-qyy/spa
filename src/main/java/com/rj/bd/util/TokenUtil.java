@@ -13,7 +13,6 @@ import com.rj.bd.mapper.IRootMapper;
 
 /**
  * @desc     token工具类
- * @author 齐云尧
  *
  */
 public class TokenUtil {

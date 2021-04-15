@@ -57,6 +57,12 @@
       <version>2.5</version>
     </dependency>
 
+		 <dependency>
+       <groupId>org.apache.poi</groupId>
+       <artifactId>poi-ooxml</artifactId>
+          <version>3.9</version>
+     </dependency> 
+		
 		
 		<!-- 格式化对象，方便输出日志 -->
 		<dependency>

@@ -21,14 +21,15 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.alibaba.fastjson.JSONObject;
 import com.baomidou.mybatisplus.core.conditions.Wrapper;
 import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
+import com.rj.bd.entity.Order;
 import com.rj.bd.entity.User;
+import com.rj.bd.mapper.IOrderMapper;
 import com.rj.bd.mapper.ITechnicianMapper;
 import com.rj.bd.mapper.IUserMapper;
 import com.rj.bd.util.Json;
 
 /**
  * @desc     获取用户
- * @author 齐云尧
  *
  */
 
@@ -39,6 +40,10 @@ public class Users {
 	@Autowired
 	
 	private IUserMapper userMapper;
+	
+	@Autowired 
+	private IOrderMapper orderMapper;
+	
 	
 	@RequestMapping(value="/query",method=RequestMethod.GET)
 	@ResponseBody
@@ -58,7 +63,7 @@ public class Users {
 	@RequestMapping(value="/queryOne",method=RequestMethod.GET)
 	@ResponseBody
 	public Map<String, Object> queryOne(HttpServletRequest request) throws IOException {
-		try {
+		
 			String name = request.getParameter("user");
 			System.out.println(name);
 			if(name.equals("") || name==null){
@@ -73,11 +78,40 @@ public class Users {
 				return Json.MyPrint("200", "请求成功", list);
 			}
 		
-		} catch (Exception e) {
-			return Json.MyPrint("-1", "非法调用", null);
-		}
+		
 		
 	}
+	
+	
+	
+	
+
+	
+	
+	
+	
+	
+
+	@RequestMapping(value="/querybyidone",method=RequestMethod.GET)
+	@ResponseBody
+	public Map<String, Object> queryByIdOne(HttpServletRequest request,int id) throws IOException {
+		
+				try {
+					List<com.rj.bd.entity.User> list = userMapper.queryById(id);
+					return Json.MyPrint("200", "请求成功", list);
+				} catch (Exception e) {
+					return Json.MyPrint("-1", "非法调用", null);
+				}
+			}
+		
+		
+		
+	
+	
+	
+	
+	
+	
 	
 	
 	
@@ -116,24 +150,29 @@ public class Users {
 	
 	@RequestMapping(value="/delete",method=RequestMethod.POST)
 	@ResponseBody
-	public Map<String, Object> deleteUser(HttpServletRequest request,int id) throws IOException {
+	public Map<String, Object> deleteUser(HttpServletRequest request,int userid) throws IOException {
 
 				
-			System.out.println(id);
+			System.out.println(userid);
 			
 			
-//			UpdateWrapper<User> updateWrapper = new UpdateWrapper<User>();
-//			updateWrapper.eq("id",id);
-//			
-//			int no =userMapper.delete(updateWrapper);
-//			if(no!=0){
-//				System.out.println("删除成功");
-//				return Json.MyPrint("200", "删除成功", null);
-//			}else{
-//				return Json.MyPrint("-1", "删除失败", null);
-//			}
+			UpdateWrapper<User> updateWrapper = new UpdateWrapper<User>();
+			updateWrapper.eq("id",userid);
+			
+			int no =userMapper.delete(updateWrapper);
+			if(no!=0){
+			System.out.println("删除成功");
+			
+			UpdateWrapper<Order> updateWrapper2 = new UpdateWrapper<Order>();
+			updateWrapper2.eq("userid",userid);
+			orderMapper.delete(updateWrapper2);
+			
+			return Json.MyPrint("200", "删除成功", null);
+			}else{
+				return Json.MyPrint("-1", "删除失败", null);
+			}
 	
-			return null;
+		
 	}
 	
 	

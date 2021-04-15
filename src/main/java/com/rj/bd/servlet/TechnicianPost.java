@@ -28,7 +28,6 @@ import lombok.experimental.var;
 
 /**
  * @desc    获取全部评论
- * @author 齐云尧
  *
  */
 
@@ -39,14 +38,14 @@ public class TechnicianPost {
 	
 	@Autowired
 	private ITechnicianPostMapper technicianPostMapper;
-
+	@Autowired
+	private ITechnicianMapper technicianMapper;
 	
 	@RequestMapping(value="/query",method=RequestMethod.GET)
 	@ResponseBody
-	public Map<String, Object> queryAll(HttpServletRequest request) throws IOException {
+	public Map<String, Object> queryAll(HttpServletRequest request,int page , int size) throws IOException {
 	try {
-		int page = Integer.parseInt(request.getParameter("page"));
-		int size = Integer.parseInt(request.getParameter("size"));
+		page= (page-1) * 10;
 		List<Map<String, Object>> list = technicianPostMapper.queryMoreAll(page,size);
 		return Json.MyPrint("200", "请求成功", list);
 	} catch (Exception e) {
@@ -54,4 +53,56 @@ public class TechnicianPost {
 	}
 		
 	}
+	
+	
+	@RequestMapping(value="/queryOne",method=RequestMethod.GET)
+	@ResponseBody
+	public Map<String, Object> queryOne(HttpServletRequest request,int page , int size, String technicianname) throws IOException {
+	
+		page= (page-1) * 10;
+		List<Map<String, Object>> list = technicianPostMapper.queryOne( technicianname,page, size);
+		return Json.MyPrint("200", "请求成功", list);
+
+		
+	}
+	
+	
+	
+	
+	
+	
+	@RequestMapping(value="/totel",method=RequestMethod.GET)
+	@ResponseBody
+	public Map<String, Object> queryOne() throws IOException {
+	try {
+		
+		Object list = technicianPostMapper.queryTotal();
+		return Json.MyPrint("200", "请求成功", list);
+	} catch (Exception e) {
+		return Json.MyPrint("-1", "非法调用", null);
+	}
+		
+	}
+	
+	
+	
+	@RequestMapping(value="/toteltwo",method=RequestMethod.GET)
+	@ResponseBody
+	public Map<String, Object> queryTwo(String technicianname) throws IOException {
+
+		
+		List<Technician> list = technicianMapper.queryOne(technicianname);
+	
+		int totel=0;
+		for (Technician technician : list) {
+			totel= totel+technicianPostMapper.queryTotalTwo(technician.getTechnicianid());
+		}
+		return Json.MyPrint("200", "请求成功", totel);
+	
+		
+	}
+	
+	
+	
+	
 }

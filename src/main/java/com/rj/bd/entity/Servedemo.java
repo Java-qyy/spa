@@ -10,6 +10,7 @@ public class Servedemo {
 
 	public int serveid;
 	public String serve;
+	public String serveavatar;
 	public String servemoney;
 	public String servetime;
 	public int servenumber;
