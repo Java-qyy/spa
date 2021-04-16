@@ -7,6 +7,6 @@
 <title>Insert title here</title>
 </head>
 <body>
-<a  href="<%=request.getContextPath()%>/user/query.action">User模块的查询</a>
+<a  href="<%=request.getContextPath()%>/root/jinru">进入</a>
 </body>
 </html>

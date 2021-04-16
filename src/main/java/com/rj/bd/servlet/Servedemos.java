@@ -21,9 +21,11 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
+import com.rj.bd.entity.Order;
 import com.rj.bd.entity.Servedemo;
 import com.rj.bd.entity.Technician;
 import com.rj.bd.entity.User;
+import com.rj.bd.mapper.IOrderMapper;
 import com.rj.bd.mapper.IServedemoMapper;
 import com.rj.bd.mapper.ITechnicianMapper;
 import com.rj.bd.util.Json;
@@ -39,7 +41,8 @@ import com.rj.bd.util.Json;
 public class Servedemos {
 	@Autowired
 	private IServedemoMapper servedemoMapper;
-
+	@Autowired 
+	private IOrderMapper orderMapper;
 	
 	@RequestMapping(value="/query",method=RequestMethod.GET)
 	@ResponseBody
@@ -176,7 +179,7 @@ public class Servedemos {
 	
 	
 
-	@RequestMapping(value="/update",method=RequestMethod.PUT)
+	@RequestMapping(value="/update",method=RequestMethod.POST)
 	@ResponseBody
 	public Map<String, Object> updateUser(HttpServletRequest request,int serveid,String serve,String servemoney,String servetime,MultipartFile serveavatar) throws IOException {
 		try {
@@ -243,6 +246,11 @@ public class Servedemos {
 			int no =servedemoMapper.delete(updateWrapper);
 			if(no!=0){
 				System.out.println("删除成功");
+				
+				UpdateWrapper<Order> updateWrapper2 = new UpdateWrapper<Order>();
+				updateWrapper2.eq("serveid",serveid);
+				orderMapper.delete(updateWrapper2);
+				
 				return Json.MyPrint("200", "删除成功", null);
 			}else{
 				return Json.MyPrint("-1", "删除失败", null);

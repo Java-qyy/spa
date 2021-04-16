@@ -106,5 +106,10 @@ public class Login {
 	
 	
 	
+	@RequestMapping("/jinru")
+	public String jinru(){
+		System.out.println("跳转 ");
+		return "/tz";
+	}
 	
 }

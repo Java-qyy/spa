@@ -117,16 +117,16 @@ public class Users {
 	
 	
 
-	@RequestMapping(value="/update",method=RequestMethod.PUT)
+	@RequestMapping(value="/update",method=RequestMethod.POST)
 	@ResponseBody
-	public Map<String, Object> updateUser(HttpServletRequest request) throws IOException {
-		try {
+	public Map<String, Object> updateUser(HttpServletRequest request,int id,String name,String identitycard, String tel,String sex) throws IOException {
+	
 			User userentity = new User();
-			int id = Integer.parseInt(request.getParameter("id"));
-			userentity.setUser(request.getParameter("name"));
-			userentity.setIdentitycard(request.getParameter("identitycard"));
-			userentity.setTel(request.getParameter("tel"));
-			userentity.setSex(request.getParameter("sex"));
+	
+			userentity.setUser(name);
+			userentity.setIdentitycard(identitycard);
+			userentity.setTel(tel);
+			userentity.setSex(sex);
 			
 			UpdateWrapper<User> updateWrapper = new UpdateWrapper<User>();
 			updateWrapper.eq("id",id);
@@ -139,9 +139,6 @@ public class Users {
 				return Json.MyPrint("-1", "修改失败", null);
 			}
 		
-		} catch (Exception e) {
-			return Json.MyPrint("-2", "非法调用", null);
-		}
 		
 	}
 	

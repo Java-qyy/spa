@@ -261,6 +261,7 @@ public class Technicians {
 			
 			System.out.println(id);
 			String path = this.getClass().getClassLoader().getResource("/").getPath()+"img";
+			System.out.println(path);
 			String fileName = "4.jpg";
 			if( technicianMapper.queryByIdAvatar(id) == null){
 				fileName ="4.jpg";

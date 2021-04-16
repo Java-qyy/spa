@@ -19,7 +19,7 @@ public interface IOrderMapper extends BaseMapper<Order>{
 	@Select(value={"select u.user,s.servemoney as money ,o.orderstate,s.serve,t.technicianname,o.ordertime from `order` o left join `user` u on o.userid=u.id left join servedemo s on s.serveid=o.serveid left join technician t on t.technicianid=o.technicianid"})
 	public List<Map<String, Object>> query();
 	
-	@Select(value={"select u.user,s.servemoney,o.orderstate ,s.serve,t.technicianname,o.ordertime from `order` o left join `user` u on o.userid=u.id left join servedemo s on s.serveid=o.serveid left join technician t on t.technicianid=o.technicianid where orderstate=#{orderstate}"})
+	@Select(value={"select u.user,s.servemoney as money,o.orderstate ,s.serve,t.technicianname,o.ordertime from `order` o left join `user` u on o.userid=u.id left join servedemo s on s.serveid=o.serveid left join technician t on t.technicianid=o.technicianid where orderstate=#{orderstate}"})
 	public List<Map<String, Object>> queryOne(int orderstate);
 	
 	@Select(value={"select count(*) from `order`"})
@@ -35,8 +35,12 @@ public interface IOrderMapper extends BaseMapper<Order>{
 	public List<Map<String, Object>> queryNumber(@Param("first") String first ,@Param("end") String end);
 
 	 
-	@Select(value={"select sum(money) as moneysum,ordertime  from `order` where ordertime>=#{first} and ordertime<=#{end} and orderstate=0 group by ordertime "})
+	@Select(value={"select sum(money) as moneysum,ordertime  from `order` where ordertime>=#{first} and ordertime<=#{end}  group by ordertime "})
 	public List<Map<String, Object>> queryshouru(@Param("first") String first ,@Param("end") String end);
+
+	
+	@Select(value={"select u.user,s.servemoney as money,o.orderstate ,s.serve,t.technicianname,o.ordertime from `order` o left join `user` u on o.userid=u.id left join servedemo s on s.serveid=o.serveid left join technician t on t.technicianid=o.technicianid where u.user='%${user}%' and s.serve='%${seave}%'  and t.technicianname='%${technicianname}%' and  o.ordertime='%${ordertime}%'  LIMIT #{page},#{size}    "})
+	public List<Map<String, Object>> querymore(@Param("user") String user,@Param("technicianname") String technicianname,@Param("serve") String serve,@Param("ordertime") String ordertime,@Param("page") int page,@Param("size") int size);
 
 
 	

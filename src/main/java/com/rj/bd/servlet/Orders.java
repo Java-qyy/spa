@@ -1,6 +1,7 @@
 package com.rj.bd.servlet;
 
 import java.io.IOException;
+import java.net.URLEncoder;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -62,15 +63,13 @@ public class Orders {
 	
 	@RequestMapping(value="/queryOne",method=RequestMethod.GET)
 	@ResponseBody
-	public Map<String, Object> queryOne(HttpServletRequest request) throws IOException {
-		try {
-			int state = Integer.parseInt(request.getParameter("orderstate"));
+	public Map<String, Object> queryOne(HttpServletRequest request ,int orderstate) throws IOException {
 			
-			List<Map<String, Object>> list = orderMapper.queryOne(state);
+			
+			
+			List<Map<String, Object>> list = orderMapper.queryOne(orderstate);
 			return Json.MyPrint("200", "请求成功", list);
-		} catch (Exception e) {
-			return Json.MyPrint("-1", "非法调用", null);
-		}
+		
 		
 	}
 	
@@ -175,6 +174,9 @@ public class Orders {
 		                  try{
 			    				Order order = new Order();
 			    				
+			    				//设置文件头：最后一个参数是设置下载文件名
+			                      response.setHeader("Content-Disposition", "attachment;fileName=" + URLEncoder.encode("订单"+".xls", "UTF-8"));
+			    				
 			    				
 			                     // 第一步，创建一个workbook，对应一个Excel文件
 			                     HSSFWorkbook workbook = new HSSFWorkbook();
@@ -267,6 +269,30 @@ public class Orders {
 	  
 	  
 	  
+	  
+	  
+		@RequestMapping(value="/querymore",method=RequestMethod.GET)
+		@ResponseBody
+		public Map<String, Object> querymore(HttpServletRequest request ,String user,String technicianname,String serve,String ordertime,int page,int size) throws IOException {
+				if(user==null){
+					user="";
+				}
+				if(serve==null){
+					serve="";
+				}
+				if(ordertime==null){
+					ordertime="";
+				}
+				if(technicianname==null){
+					technicianname="";
+				}
+				
+				
+				List<Map<String, Object>> list = orderMapper.querymore(user,technicianname,serve,ordertime,page,size);
+				return Json.MyPrint("200", "请求成功", list);
+			
+			
+		}
 	  
 	  
 	  

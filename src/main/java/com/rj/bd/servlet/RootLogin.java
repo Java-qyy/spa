@@ -2,6 +2,7 @@ package com.rj.bd.servlet;
 
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -66,7 +67,8 @@ public class RootLogin {
 	                  String[] titles = { "管理员id", "管理员姓名", "登陆的时间", "登陆的ip" }; 
 	                  try{
 		    				RootLogin rootLogin = new RootLogin();
-		    				
+		    				//设置文件头：最后一个参数是设置下载文件名
+		                      response.setHeader("Content-Disposition", "attachment;fileName=" + URLEncoder.encode("日志"+".xls", "UTF-8"));
 		    				
 		                     // 第一步，创建一个workbook，对应一个Excel文件
 		                     HSSFWorkbook workbook = new HSSFWorkbook();
