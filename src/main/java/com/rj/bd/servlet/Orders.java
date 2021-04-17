@@ -47,27 +47,24 @@ public class Orders {
 	
 	@RequestMapping(value="/query",method=RequestMethod.GET)
 	@ResponseBody
-	public Map<String, Object> queryAll(HttpServletRequest request) throws IOException {
+	public Map<String, Object> queryAll(HttpServletRequest request, int page,int size) throws IOException {
 		try {
+			page=(page-1)*10;
 			
-			
-			List<Map<String, Object>> list = orderMapper.query();
+			List<Map<String, Object>> list = orderMapper.query(page,size);
 			return Json.MyPrint("200", "请求成功", list);
 		} catch (Exception e) {
 			return Json.MyPrint("-1", "非法调用", null);
 		}
-		
 	}
 	
 	
 	
 	@RequestMapping(value="/queryOne",method=RequestMethod.GET)
 	@ResponseBody
-	public Map<String, Object> queryOne(HttpServletRequest request ,int orderstate) throws IOException {
-			
-			
-			
-			List<Map<String, Object>> list = orderMapper.queryOne(orderstate);
+	public Map<String, Object> queryOne(HttpServletRequest request ,int orderstate,int page, int size) throws IOException {
+			page=(page-1)*5;
+			List<Map<String, Object>> list = orderMapper.queryOne(orderstate , page,size);
 			return Json.MyPrint("200", "请求成功", list);
 		
 		
@@ -203,8 +200,8 @@ public class Orders {
 			                     // 第五步，写入实体数据 
 			                      //这里我把list当做数据库啦
 			                      List<Map<String, Object>>  list=new ArrayList<Map<String, Object>>();
-			                      System.out.println(orderMapper.query());
-			                      list = orderMapper.query();
+			                      System.out.println(orderMapper.querymany());
+			                      list = orderMapper.querymany();
 			                     
 			                         for (int i = 0; i < list.size(); i++) {
 			                             row = hssfSheet.createRow(i+1);                
@@ -273,7 +270,38 @@ public class Orders {
 	  
 		@RequestMapping(value="/querymore",method=RequestMethod.GET)
 		@ResponseBody
-		public Map<String, Object> querymore(HttpServletRequest request ,String user,String technicianname,String serve,String ordertime,int page,int size) throws IOException {
+		public Map<String, Object> querymore(HttpServletRequest request ,String user,String technicianname,String serve,String ordertime,int orderstate,int page,int size) throws IOException {
+				if(user==null){
+					user="";
+				}
+				if(serve==null){
+					serve="";
+				}
+				if(ordertime==null ){
+					ordertime="";
+				}
+				
+				if(technicianname==null){
+					technicianname="";
+				}
+			
+				page=(page-1)*10;
+				if(orderstate==3){
+					List<Map<String, Object>> list = orderMapper.querymore(user,technicianname,serve,ordertime,page,size);
+					return Json.MyPrint("200", "请求成功", list);
+				}else{
+					List<Map<String, Object>> list = orderMapper.querymorestate(user,technicianname,serve,ordertime,orderstate,page,size);
+					return Json.MyPrint("200", "请求成功", list);
+				}
+	
+		}
+	  
+	  
+	  
+
+		@RequestMapping(value="/querytotel",method=RequestMethod.GET)
+		@ResponseBody
+		public Map<String, Object> querytotel(HttpServletRequest request ,String user,String technicianname,String serve,String ordertime,int orderstate) throws IOException {
 				if(user==null){
 					user="";
 				}
@@ -286,16 +314,22 @@ public class Orders {
 				if(technicianname==null){
 					technicianname="";
 				}
+			
+				
+				if(orderstate==3){
+					int list = orderMapper.querymoretotel(user,technicianname,serve,ordertime);
+					return Json.MyPrint("200", "请求成功", list);
+				}else{
+					int list = orderMapper.querymorestatetotel(user,technicianname,serve,ordertime,orderstate);
+					return Json.MyPrint("200", "请求成功", list);
+				}
 				
 				
-				List<Map<String, Object>> list = orderMapper.querymore(user,technicianname,serve,ordertime,page,size);
-				return Json.MyPrint("200", "请求成功", list);
 			
 			
 		}
-	  
-	  
-	  
+		
+		
 	  
 	  
 	

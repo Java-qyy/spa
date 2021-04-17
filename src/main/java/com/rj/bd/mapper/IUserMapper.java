@@ -17,8 +17,9 @@ public interface IUserMapper extends BaseMapper<User>{
 	@Select(value={"select * from user where id=#{id}"})
 	public List<User> queryById(int id);
 	
-	@Select(value={"select * from user where user like  '%#{name}%'"})
-	public List<User> queryOne(String name);
+	@Select(value={"select * from user where user like  '%${name}%'"})
+	public List<User> queryOne(@Param("name") String name);
+	
 
 
 	

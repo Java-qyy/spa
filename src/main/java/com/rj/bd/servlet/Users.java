@@ -62,11 +62,11 @@ public class Users {
 	
 	@RequestMapping(value="/queryOne",method=RequestMethod.GET)
 	@ResponseBody
-	public Map<String, Object> queryOne(HttpServletRequest request) throws IOException {
+	public Map<String, Object> queryOne(HttpServletRequest request,String user) throws IOException {
 		
-			String name = request.getParameter("user");
-			System.out.println(name);
-			if(name.equals("") || name==null){
+			
+			System.out.println(user);
+			if(user.equals("") || user==null){
 				try {
 					List<com.rj.bd.entity.User> list = userMapper.selectList(null);
 					return Json.MyPrint("200", "请求成功", list);
@@ -74,7 +74,7 @@ public class Users {
 					return Json.MyPrint("-1", "非法调用", null);
 				}
 			}else{
-				List<com.rj.bd.entity.User> list = userMapper.queryOne(name);
+				List<com.rj.bd.entity.User> list = userMapper.queryOne(user);
 				return Json.MyPrint("200", "请求成功", list);
 			}
 		

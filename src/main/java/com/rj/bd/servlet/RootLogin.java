@@ -42,10 +42,10 @@ public class RootLogin {
 	private IRootLoginMapper rootLoginMapper;
 	@RequestMapping(value="/query",method=RequestMethod.GET)
 	@ResponseBody
-	public Map<String, Object> queryAll(HttpServletRequest request) throws IOException {
+	public Map<String, Object> queryAll(HttpServletRequest request,int page,int size) throws IOException {
 		try {
-			
-			List<Map<String, Object>> list = rootLoginMapper.query();
+			page = (page-1)*10;
+			List<Map<String, Object>> list = rootLoginMapper.query(page,size);
 			return Json.MyPrint("200", "请求成功", list);
 		} catch (Exception e) {
 			return Json.MyPrint("-1", "非法调用", null);		
@@ -54,6 +54,20 @@ public class RootLogin {
 		
 	}
 	
+	
+	@RequestMapping(value="/querytotel",method=RequestMethod.GET)
+	@ResponseBody
+	public Map<String, Object> querytotel() throws IOException {
+		try {
+
+			int list = rootLoginMapper.querytotel();
+			return Json.MyPrint("200", "请求成功", list);
+		} catch (Exception e) {
+			return Json.MyPrint("-1", "非法调用", null);		
+		}
+		
+		
+	}
 	
 	@RequestMapping(value="/excel",method=RequestMethod.GET)    
 	@ResponseBody

@@ -182,7 +182,7 @@ public class Servedemos {
 	@RequestMapping(value="/update",method=RequestMethod.POST)
 	@ResponseBody
 	public Map<String, Object> updateUser(HttpServletRequest request,int serveid,String serve,String servemoney,String servetime,MultipartFile serveavatar) throws IOException {
-		try {
+	
 			
 			com.rj.bd.entity.Servedemo servedemo = new com.rj.bd.entity.Servedemo();
 			
@@ -224,9 +224,7 @@ public class Servedemos {
 				return Json.MyPrint("-1", "修改失败", null);
 			}
 		
-		} catch (Exception e) {
-			return Json.MyPrint("-2", "非法调用", null);
-		}
+	
 		
 	}
 	
