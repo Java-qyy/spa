@@ -44,13 +44,11 @@ public class TechnicianPost {
 	@RequestMapping(value="/query",method=RequestMethod.GET)
 	@ResponseBody
 	public Map<String, Object> queryAll(HttpServletRequest request,int page , int size) throws IOException {
-	try {
+	
 		page= (page-1) * 10;
 		List<Map<String, Object>> list = technicianPostMapper.queryMoreAll(page,size);
 		return Json.MyPrint("200", "请求成功", list);
-	} catch (Exception e) {
-		return Json.MyPrint("-1", "非法调用", null);
-	}
+	
 		
 	}
 	
@@ -74,13 +72,11 @@ public class TechnicianPost {
 	@RequestMapping(value="/totel",method=RequestMethod.GET)
 	@ResponseBody
 	public Map<String, Object> queryOne() throws IOException {
-	try {
+
 		
 		Object list = technicianPostMapper.queryTotal();
 		return Json.MyPrint("200", "请求成功", list);
-	} catch (Exception e) {
-		return Json.MyPrint("-1", "非法调用", null);
-	}
+	
 		
 	}
 	

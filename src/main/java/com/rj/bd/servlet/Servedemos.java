@@ -183,6 +183,7 @@ public class Servedemos {
 	@ResponseBody
 	public Map<String, Object> updateUser(HttpServletRequest request,int serveid,String serve,String servemoney,String servetime,MultipartFile serveavatar) throws IOException {
 	
+
 			
 			com.rj.bd.entity.Servedemo servedemo = new com.rj.bd.entity.Servedemo();
 			

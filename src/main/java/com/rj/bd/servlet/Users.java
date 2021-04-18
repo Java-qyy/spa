@@ -22,9 +22,11 @@ import com.alibaba.fastjson.JSONObject;
 import com.baomidou.mybatisplus.core.conditions.Wrapper;
 import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import com.rj.bd.entity.Order;
+import com.rj.bd.entity.Technicianpost;
 import com.rj.bd.entity.User;
 import com.rj.bd.mapper.IOrderMapper;
 import com.rj.bd.mapper.ITechnicianMapper;
+import com.rj.bd.mapper.ITechnicianPostMapper;
 import com.rj.bd.mapper.IUserMapper;
 import com.rj.bd.util.Json;
 
@@ -38,8 +40,9 @@ import com.rj.bd.util.Json;
 @RequestMapping("/user")
 public class Users {
 	@Autowired
-	
 	private IUserMapper userMapper;
+	@Autowired
+	private ITechnicianPostMapper technicianPostMapper;
 	
 	@Autowired 
 	private IOrderMapper orderMapper;
@@ -164,6 +167,11 @@ public class Users {
 			updateWrapper2.eq("userid",userid);
 			orderMapper.delete(updateWrapper2);
 			System.out.println("订单表对应数据删除成功");
+			
+			UpdateWrapper<Technicianpost> updateWrapper3 = new UpdateWrapper<Technicianpost>();
+			updateWrapper3.eq("userid",userid);
+			technicianPostMapper.delete(updateWrapper3);
+			System.out.println("评价表对应数据删除成功");
 			
 			return Json.MyPrint("200", "删除成功", null);
 			}else{

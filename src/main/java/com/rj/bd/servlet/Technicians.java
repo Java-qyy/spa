@@ -29,10 +29,11 @@ import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import com.rj.bd.entity.Order;
 import com.rj.bd.entity.Servedemo;
 import com.rj.bd.entity.Technician;
-
+import com.rj.bd.entity.Technicianpost;
 import com.rj.bd.entity.User;
 import com.rj.bd.mapper.IOrderMapper;
 import com.rj.bd.mapper.ITechnicianMapper;
+import com.rj.bd.mapper.ITechnicianPostMapper;
 import com.rj.bd.mapper.IUserMapper;
 import com.rj.bd.util.Json;
 
@@ -53,6 +54,10 @@ public class Technicians {
 		private ITechnicianMapper technicianMapper;
 		@Autowired 
 		private IOrderMapper orderMapper;
+		
+		@Autowired
+		private ITechnicianPostMapper technicianPostMapper;
+		
 
 		
 		@RequestMapping(value="/query",method=RequestMethod.GET)
@@ -124,6 +129,7 @@ public class Technicians {
 		@ResponseBody
 		public Map<String, Object> update(HttpServletRequest request,int technicianid, String technicianname,MultipartFile technicianavatar, int jobtime , String techniciantemp,int technicianstate) throws IOException {
 			
+			System.out.println(technicianid);
 				//获取文件的文件名字
 				String fileName = technicianavatar.getOriginalFilename();
 				System.out.println(fileName);
@@ -151,13 +157,13 @@ public class Technicians {
 		        Technician technician = new Technician();
 		        technician.setJobtime(jobtime);
 		        technician.setTechnicianavatar(fileName);
-		        
+		        technician.setTechnicianid(technicianid);
 		        technician.setTechnicianname(technicianname);
 		        technician.setTechnicianstate(technicianstate);
 		        technician.setTechniciantemp(techniciantemp);
 		        
 		        UpdateWrapper<Technician>updateWrapper = new UpdateWrapper<Technician>();
-		        updateWrapper.eq("technicianid",id);
+		        updateWrapper.eq("technicianid",technicianid);
 		        technicianMapper.update(technician, updateWrapper);
 		        
 		  
@@ -187,6 +193,11 @@ public class Technicians {
 					orderMapper.delete(updateWrapper2);
 					System.out.println("订单表对应数据删除成功");
 					
+					
+					UpdateWrapper<Technicianpost> updateWrapper3 = new UpdateWrapper<Technicianpost>();
+					updateWrapper3.eq("technicianid",technicianid);
+					technicianPostMapper.delete(updateWrapper3);
+					System.out.println("评价表对应数据删除成功");
 					
 					System.out.println("删除成功");
 					
