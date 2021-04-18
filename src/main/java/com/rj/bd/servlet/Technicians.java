@@ -185,6 +185,7 @@ public class Technicians {
 					UpdateWrapper<Order> updateWrapper2 = new UpdateWrapper<Order>();
 					updateWrapper2.eq("technicianid",technicianid);
 					orderMapper.delete(updateWrapper2);
+					System.out.println("订单表对应数据删除成功");
 					
 					
 					System.out.println("删除成功");
