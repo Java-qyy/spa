@@ -109,7 +109,6 @@ public class Orders {
 	@RequestMapping(value="/echart",method=RequestMethod.GET)
 	@ResponseBody
 	public Map<String, Object> queryEchart(HttpServletRequest request) throws IOException {
-		try {
 			
 			Date firstDay = getBeforeOrAfterDate(new Date(),-6);
 	        Date lastDay = getBeforeOrAfterDate(new Date(),-0);
@@ -118,9 +117,7 @@ public class Orders {
 	        String end = sdf.format(lastDay);
 	        List<Map<String, Object>> list = orderMapper.queryNumber(first, end);
 			return Json.MyPrint("200", "请求成功", list);
-		} catch (Exception e) {
-			return Json.MyPrint("-1", "非法调用", null);
-		}
+		
 		
 	}
 
@@ -129,7 +126,7 @@ public class Orders {
 	@RequestMapping(value="/echarttwo",method=RequestMethod.GET)
 	@ResponseBody
 	public Map<String, Object> queryEcharttwo(HttpServletRequest request) throws IOException {
-		try {
+	
 			
 			Date firstDay = getBeforeOrAfterDate(new Date(),-5);
 	        Date lastDay = getBeforeOrAfterDate(new Date(),-0);
@@ -138,9 +135,7 @@ public class Orders {
 	        String end = sdf.format(lastDay);
 	        List<Map<String, Object>> list = orderMapper.queryshouru(first, end);
 			return Json.MyPrint("200", "请求成功", list);
-		} catch (Exception e) {
-			return Json.MyPrint("-1", "非法调用", null);
-		}
+	
 		
 	}
 	
